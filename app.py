@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "OK"
+    return "Yui server is alive!"
 
 @app.route("/submit", methods=["POST"])
 def submit():
