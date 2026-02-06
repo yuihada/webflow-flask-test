@@ -14,6 +14,9 @@ def submit():
     # 念のためフォーム形式でも受けられるように
     name = request.form.get("name") or data.get("name") or ""
     message = request.form.get("message") or data.get("message") or data.get("email") or ""
+    print("---- received ----")
+    print("name:", name)
+    print("message:", message)
     return jsonify({
     "ok": True,
     "name": name,
