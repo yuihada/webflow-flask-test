@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -13,4 +14,9 @@ def submit():
     # 念のためフォーム形式でも受けられるように
     name = request.form.get("name") or data.get("name") or ""
     message = request.form.get("message") or data.get("message") or data.get("email") or ""
-    return jsonify({"ok": True, "name": name, "message": message})
+    return jsonify({
+    "ok": True,
+    "name": name,
+    "message": message,
+    "server_time": datetime.now().isoformat()
+})
