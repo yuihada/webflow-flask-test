@@ -30,6 +30,9 @@ def home():
 
 @app.route("/submit", methods=["POST"])
 def submit():
+    print("RAW JSON:", request.get_json(silent=True))
+    print("FORM:", request.form)
+    
     data = request.get_json(silent=True) or {}
 
     name = request.form.get("name") or data.get("name") or ""
@@ -51,7 +54,6 @@ def submit():
         "server_time": datetime.now().isoformat()
     })
 
-
 @app.route("/admin")
 def admin():
     messages = load_messages()
@@ -70,7 +72,6 @@ def admin():
 
     return html
 
-
 # ✅ 追加：いまの状態を目視できるデバッグページ
 @app.route("/debug")
 def debug():
@@ -85,3 +86,4 @@ def debug():
         "count": len(messages),
         "latest": messages[-1] if messages else None
     })
+    
