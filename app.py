@@ -2,6 +2,17 @@ from flask import Flask, request, jsonify
 from datetime import datetime
 import csv
 
+def load_messages():
+    messages = []
+    try:
+        with open("messages.csv", newline="", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                messages.append(row)
+    except FileNotFoundError:
+        pass
+    return messages
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -31,3 +42,13 @@ def submit():
         "message": message,
         "server_time": datetime.now().isoformat()
 })
+@app.route("/admin")
+def admin():
+    messages = load_messages()
+
+    html = "<h1>Messages</h1><ul>"
+    for time, name, message in messages:
+        html += f"<li>{time} / {name} : {message}</li>"
+    html += "</ul>"
+
+    return html
