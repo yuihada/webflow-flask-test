@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from datetime import datetime
+import csv
 
 app = Flask(__name__)
 
@@ -17,9 +18,16 @@ def submit():
     print("---- received ----")
     print("name:", name)
     print("message:", message)
+    with open("messages.csv", "a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            datetime.now().isoformat(),
+            name,
+            message
+        ])
     return jsonify({
-    "ok": True,
-    "name": name,
-    "message": message,
-    "server_time": datetime.now().isoformat()
+        "ok": True,
+        "name": name,
+        "message": message,
+        "server_time": datetime.now().isoformat()
 })
